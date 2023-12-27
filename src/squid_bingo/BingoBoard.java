@@ -1,11 +1,11 @@
 package squid_bingo;
 
-public class Bingo {
+public class BingoBoard {
 
     private int[][] data;
     private int[][] marked;
 
-    public Bingo(int[][] data) {
+    public BingoBoard(int[][] data) {
         this.data = data;
         this.marked = new int[5][5];
     }
@@ -65,16 +65,6 @@ public class Bingo {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 System.out.print(this.data[i][j] + " ");
-            }
-            System.out.println(" ");
-        }
-        System.out.println("--------------");
-    }
-
-    public void draw_marked() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.print(this.marked[i][j] + " ");
             }
             System.out.println(" ");
         }
