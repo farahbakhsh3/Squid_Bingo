@@ -34,23 +34,17 @@ public class Squid_Bingo {
         return nums;
     }
 
-    private static void draw(int[][] board) {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println(" ");
-        }
-        System.out.println("--------------");
-    }
 
     public static void main(String[] args) {
+        Bingo[] boards = new Bingo[100];
+        
         ArrayList<String> lines = readFile(".\\data.txt");
 
-        ArrayList<Integer> nums = readNums(lines.get(0).split(","));
-        for (int num : nums) {
+        ArrayList<Integer> randNums = readNums(lines.get(0).split(","));
+        for (int num : randNums) {
             System.out.print(num+", ");
         }
+        System.out.println("\n------------------\n");
 
         int[][] board = new int[5][5];
         String line;
@@ -65,7 +59,25 @@ public class Squid_Bingo {
                     }
                 }
             }
-            draw(board);
+            boards[idxLine/5] = new Bingo(board);
+        }
+        
+        System.out.println("\n----------------------\n");
+        
+        boolean win = false;
+        for(int randNum : randNums){
+            for(int i=0; i < boards.length; i++){
+                boards[i].marked(randNum);
+                if (boards[i].win()){
+                    System.out.println("Score is :: " + boards[i].score(randNum));
+                    boards[i].draw();
+                    win = true;
+                    break;
+                }
+            }
+            if (win){
+                break;
+            }
         }
     }
 }
