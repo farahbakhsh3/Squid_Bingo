@@ -34,21 +34,20 @@ public class Squid_Bingo {
         return nums;
     }
 
-
     public static void main(String[] args) {
-        Bingo[] boards = new Bingo[100];
-        
+        BingoBoard[] boards = new BingoBoard[100];
+
         ArrayList<String> lines = readFile(".\\data.txt");
 
         ArrayList<Integer> randNums = readNums(lines.get(0).split(","));
         for (int num : randNums) {
-            System.out.print(num+", ");
+            System.out.print(num + ", ");
         }
         System.out.println("\n------------------\n");
 
-        int[][] board = new int[5][5];
         String line;
         for (int idxLine = 1; idxLine < lines.size(); idxLine += 5) {
+            int[][] board = new int[5][5];
             for (int bLine = 0; bLine < 5; bLine++) {
                 line = lines.get(idxLine + bLine);
                 int bLineCol = 0;
@@ -59,23 +58,23 @@ public class Squid_Bingo {
                     }
                 }
             }
-            boards[idxLine/5] = new Bingo(board);
+            boards[idxLine / 5] = new BingoBoard(board);
         }
-        
+
         System.out.println("\n----------------------\n");
-        
+
         boolean win = false;
-        for(int randNum : randNums){
-            for(int i=0; i < boards.length; i++){
-                boards[i].marked(randNum);
-                if (boards[i].win()){
-                    System.out.println("Score is :: " + boards[i].score(randNum));
-                    boards[i].draw();
+        for (int randNum : randNums) {
+            for (BingoBoard board : boards) {
+                board.marked(randNum);
+                if (board.win()) {
+                    System.out.println("Score is :: " + board.score(randNum));
+                    board.draw();
                     win = true;
                     break;
                 }
             }
-            if (win){
+            if (win) {
                 break;
             }
         }
